@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Multiselect App</title>
+<link rel="stylesheet"
+	href="bootstrap.min.css" />
+<link rel="stylesheet"
+	href="customStyle.css" />
+<script type="text/javascript"
+	src="jquery.min.js"></script>
+<script type="text/javascript"
+	src="bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="multiselect.min.js"></script>
+<script type="text/javascript"
+	src="angular.min.js"></script>
+<script type="text/javascript"
+	src="angularController.js"></script>
+
+</head>
+<body>
+	<div id="wrap" class="container p-top-lg" ng-app="myApp"
+		ng-controller="myCtrl" ng-cloak>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="col-sm-6 no-p-left">
+					<div class="form-group">
+						<label for="sel1">Select State</label> <select
+							class="form-control" id="sel1" placeholder="Select State"
+							ng-model="selectedState" ng-change="getCitiesFor(selectedState)">
+							<option ng-repeat="state in states">{{state}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-6 no-p-right">
+					<div class="form-group">
+						<label for="sel2">Select City</label> <select class="form-control"
+							id="sel2" placeholder="Select City" ng-model="selectedCity"
+							ng-change="getPincodesForSelectedCity(selectedCity)">
+							<option ng-repeat="city in cities track by $index">{{city}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row m-top-sm">
+			<div class="col-sm-5">
+				<label>Select Pincodes</label>
+				<input type="text" name="q" class="form-control" placeholder="Search..." ng-model="locationPin"/>
+				<select name="from[]" id="search" class="form-control" size="8"
+					multiple="multiple">
+					<option value="pin.locationPin" data-position=$index ng-repeat="pin in pincodes | filter: locationPin | filter: locationName">{{pin.locationPin}}-{{pin.locationName}}</option>
+				</select>
+			</div>
+
+			<div class="col-sm-2 p-top-lg">
+				<button type="button" id="search_rightSelected"
+					class="btn btn-block m-top-lg">
+					<i class="right"></i>
+				</button>
+				<button type="button" id="search_leftSelected" class="btn btn-block">
+					<i class="left"></i>
+				</button>
+			</div>
+
+			<div class="col-sm-5">
+				<label>Selected Pincodes</label>
+				<select name="to[]" id="search_to" class="form-control" size="8"
+					multiple="multiple"></select>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(
+			function() {
+				$('#search').multiselect({
+					search : {
+						right : '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+					},
+	
+				});
+			});
+	</script>
+</body>
+</html>
